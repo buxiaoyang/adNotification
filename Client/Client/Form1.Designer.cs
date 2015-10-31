@@ -33,7 +33,6 @@
             this.notifyIconMain = new System.Windows.Forms.NotifyIcon(this.components);
             this.contextMenuStripMain = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItemNotifications = new System.Windows.Forms.ToolStripMenuItem();
-            this.listViewNotification = new System.Windows.Forms.ListView();
             this.imageListMain = new System.Windows.Forms.ImageList(this.components);
             this.timerMain = new System.Windows.Forms.Timer(this.components);
             this.contextMenuStripMain.SuspendLayout();
@@ -61,17 +60,6 @@
             this.toolStripMenuItemNotifications.Text = "Notifications";
             this.toolStripMenuItemNotifications.Click += new System.EventHandler(this.toolStripMenuItemNotifications_Click);
             // 
-            // listViewNotification
-            // 
-            this.listViewNotification.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listViewNotification.GridLines = true;
-            this.listViewNotification.Location = new System.Drawing.Point(0, 0);
-            this.listViewNotification.MultiSelect = false;
-            this.listViewNotification.Name = "listViewNotification";
-            this.listViewNotification.Size = new System.Drawing.Size(470, 307);
-            this.listViewNotification.TabIndex = 1;
-            this.listViewNotification.UseCompatibleStateImageBehavior = false;
-            // 
             // imageListMain
             // 
             this.imageListMain.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListMain.ImageStream")));
@@ -89,11 +77,10 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(470, 307);
-            this.Controls.Add(this.listViewNotification);
             this.Name = "FormMain";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Notifications";
+            this.Text = "Notification";
             this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
             this.Load += new System.EventHandler(this.FormMain_Load);
@@ -108,7 +95,6 @@
         private System.Windows.Forms.NotifyIcon notifyIconMain;
         private System.Windows.Forms.ContextMenuStrip contextMenuStripMain;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemNotifications;
-        private System.Windows.Forms.ListView listViewNotification;
         private System.Windows.Forms.ImageList imageListMain;
         private System.Windows.Forms.Timer timerMain;
     }

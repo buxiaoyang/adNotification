@@ -48,10 +48,7 @@ namespace Client
 
         private void FormMain_Load(object sender, EventArgs e)
         {
-            for(int i=0; i< 100; i++)
-            {
-                this.listViewNotification.Items.Add(i + "  asdfasdfasfdasdfasfasdfasdfsadfasdfasdfasfdasdfsadfasdfsadfasdfasdfasfdasdfsadfasdfsadfasdfasdfasfdasdfsadf");
-            }  
+
         }
 
         private void FormMain_SizeChanged(object sender, EventArgs e)
