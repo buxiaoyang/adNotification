@@ -11,9 +11,17 @@ namespace Client
 {
     public partial class FormMain : Form
     {
+        bool timeTick = false;
+        Icon iconNotification;
+        Icon iconNotificationBlank;
         public FormMain()
         {
             InitializeComponent();
+            iconNotification = Icon.FromHandle(((Bitmap)imageListMain.Images[0]).GetHicon());
+            iconNotificationBlank = Icon.FromHandle(((Bitmap)imageListMain.Images[1]).GetHicon());
+            this.Icon = iconNotification;
+            this.notifyIconMain.Icon = iconNotification;
+            //timerMain.Start();
         }
 
         protected override void WndProc(ref Message m)
@@ -40,7 +48,10 @@ namespace Client
 
         private void FormMain_Load(object sender, EventArgs e)
         {
-          
+            for(int i=0; i< 100; i++)
+            {
+                this.listViewNotification.Items.Add(i + "  asdfasdfasfdasdfasfasdfasdfsadfasdfasdfasfdasdfsadfasdfsadfasdfasdfasfdasdfsadfasdfsadfasdfasdfasfdasdfsadf");
+            }  
         }
 
         private void FormMain_SizeChanged(object sender, EventArgs e)
@@ -80,6 +91,20 @@ namespace Client
             this.WindowState = FormWindowState.Minimized;
             this.Hide();
             this.notifyIconMain.Visible = true;
+        }
+
+        private void timerMain_Tick(object sender, EventArgs e)
+        {
+            if(timeTick)
+            {
+                this.notifyIconMain.Icon = iconNotification;
+                timeTick = false;
+            }
+            else
+            {
+                this.notifyIconMain.Icon = iconNotificationBlank;
+                timeTick = true;
+            }
         }
     }
 }
