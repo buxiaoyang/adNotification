@@ -131,7 +131,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAADc
-        BgAAAk1TRnQBSQFMAgEBAgEAAQgBAAEIAQABIAEAASABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAGA
+        BgAAAk1TRnQBSQFMAgEBAgEAARgBAAEYAQABIAEAASABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAGA
         AwABIAMAAQEBAAEYBgABMBsAA/ID1wO+BrYGtQO2A7UDtgO1A7YDtQO2A7UDtgO1BrYDtQO2BrUDuQPN
         A+QD/gYAYP/GAAPkA5YJmAOXJ5gDlwOYA5cDmAOXA5gDlwOWA8MGAGD/wwAD5gOYA5cDmAOXBpgGlwOY
         A5cDmAOXA5gDlwOYA5cDmAOXBpgDlwOVA5cDmAOXA5gDlwOYA8MD/mD/wwADpg+YA5cnmAOWA4oDuQOV
@@ -163,7 +163,10 @@
         AQEMAAHAAgABAwwAAfACAAEPDAAL
 </value>
   </data>
-  <metadata name="timerMain.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="timerIcon.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>538, 17</value>
+  </metadata>
+  <metadata name="timerMain.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>665, 17</value>
   </metadata>
 </root>

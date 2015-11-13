@@ -4,16 +4,26 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net;
 using System.Text;
+using System.Web.Script.Serialization;
 using System.Windows.Forms;
 
 namespace Client
 {
     public partial class FormMain : Form
     {
+        //indicate has message or not
+        bool hasMessage = false;
+        string messageID = "";
+        //used for icon flash
         bool timeTick = false;
         Icon iconNotification;
         Icon iconNotificationBlank;
+        //login user
+        string userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name.ToLower();
+        //seeting
+        MySettings setting = MySettings.Load();
         public FormMain()
         {
             InitializeComponent();
@@ -21,7 +31,8 @@ namespace Client
             iconNotificationBlank = Icon.FromHandle(((Bitmap)imageListMain.Images[1]).GetHicon());
             this.Icon = iconNotification;
             this.notifyIconMain.Icon = iconNotification;
-            //timerMain.Start();
+            timerMain.Start();
+            getMessage();
         }
 
         protected override void WndProc(ref Message m)
@@ -46,16 +57,11 @@ namespace Client
             TopMost = top;
         }
 
-        private void FormMain_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void FormMain_SizeChanged(object sender, EventArgs e)
         {
             if (this.WindowState == FormWindowState.Minimized)
             {
-                this.Hide(); 
+                this.Hide();
                 this.notifyIconMain.Visible = true;
             }
         }
@@ -88,11 +94,12 @@ namespace Client
             this.WindowState = FormWindowState.Minimized;
             this.Hide();
             this.notifyIconMain.Visible = true;
+            confirmMessage();
         }
 
-        private void timerMain_Tick(object sender, EventArgs e)
+        private void timerIcon_Tick(object sender, EventArgs e)
         {
-            if(timeTick)
+            if (timeTick)
             {
                 this.notifyIconMain.Icon = iconNotification;
                 timeTick = false;
@@ -102,6 +109,70 @@ namespace Client
                 this.notifyIconMain.Icon = iconNotificationBlank;
                 timeTick = true;
             }
+        }
+
+        private void timerMain_Tick(object sender, EventArgs e)
+        {
+            getMessage();
+        }
+
+        private void getMessage()
+        {
+            if(!hasMessage)
+            {
+                using (WebClient wc = new WebClient())
+                {
+                    var json = wc.DownloadString(setting.server + "/Message/Get?user=" + userName.ToLower());
+                    dynamic result = (new JavaScriptSerializer()).Deserialize<Object>(json);
+                    if(result["result"])
+                    {
+                        Encrypt encrypt = new Encrypt();
+                        messageID = encrypt.DecryptString(result["ID"]);
+                        String TITLE = encrypt.DecryptString(result["TITLE"]);
+                        String CONTENT = encrypt.DecryptString(result["CONTENT"]);
+                        String CREATE_USER = encrypt.DecryptString(result["CREATE_USER"]);
+                        DateTime CREATE_DATETIME = result["CREATE_DATETIME"];
+                        
+                        this.webBrowserMain.DocumentText = "<h1>"+TITLE+"</h1><div>"+CONTENT+"</div>";
+                        //flash the icon
+                        hasMessage = true;
+                        timerIcon.Start();
+                    }
+                    else
+                    {
+                        this.webBrowserMain.DocumentText = "<h1>No Message</h1>";
+                        hasMessage = false;
+                        timerIcon.Stop();
+                        this.notifyIconMain.Icon = iconNotification;
+                        timeTick = false;
+                    }
+                }
+            }
+        }
+
+        private void confirmMessage()
+        {
+            if(hasMessage)
+            {
+                //confirm message
+                using (WebClient wc = new WebClient())
+                {
+                    var json = wc.DownloadString(setting.server + "/Message/Confirm?user=" + userName.ToLower() + "&announcement=" + messageID);
+                    this.webBrowserMain.DocumentText = "<h1>No Message</h1>";
+                    hasMessage = false;
+                    timerIcon.Stop();
+                    this.notifyIconMain.Icon = iconNotification;
+                    timeTick = false;
+                }
+            }
+        }
+
+        private void buttonOK_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+            this.Hide();
+            this.notifyIconMain.Visible = true;
+            confirmMessage();
         }
     }
 }

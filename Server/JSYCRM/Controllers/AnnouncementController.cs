@@ -76,6 +76,11 @@ namespace JSYCRM.Controllers
                 model_m_announcement.DELETE_FLG = "0";
                 DAL.m_announcement dal_m_announcement = new DAL.m_announcement();
                 dal_m_announcement.Add(model_m_announcement);
+
+                //add list
+                DAL.m_announcement_user dal_m_announcement_user = new DAL.m_announcement_user();
+                dal_m_announcement_user.AddList(model_m_announcement);
+
                 return RedirectToAction("Index", new { message = HttpUtility.UrlEncode("Create Succeed") });
             }
             catch
@@ -110,6 +115,10 @@ namespace JSYCRM.Controllers
                 model_m_announcement.UPDATE_USER_ID = session_model_z_user.ID;
                 model_m_announcement.UPDATE_DATETIME = DateTime.Now;
                 dal_m_announcement.Update(model_m_announcement);
+                //add list
+                DAL.m_announcement_user dal_m_announcement_user = new DAL.m_announcement_user();
+                dal_m_announcement_user.AddList(model_m_announcement);
+
                 return RedirectToAction("Index", new { message = HttpUtility.UrlEncode("Edit Succeed") });
             }
             catch
@@ -171,6 +180,5 @@ namespace JSYCRM.Controllers
                 return RedirectToAction("Index", new { message = HttpUtility.UrlEncode("操作失败") });
             }
         }
-
     }
 }

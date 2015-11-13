@@ -4,9 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Web;
 
-namespace JSYCRM.Common
+namespace Client
 {
     /// <summary>
     /// 字符串加密组件

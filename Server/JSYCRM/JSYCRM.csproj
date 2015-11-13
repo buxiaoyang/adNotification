@@ -155,6 +155,7 @@
     <Compile Include="Controllers\AnnouncementController.cs" />
     <Compile Include="Controllers\ImportWorkerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\ParameterController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\SimulatorController.cs" />
@@ -162,6 +163,7 @@
     <Compile Include="Controllers\MyWorkerController.cs" />
     <Compile Include="Controllers\WorkerPoolController.cs" />
     <Compile Include="DAL\m_announcement.cs" />
+    <Compile Include="DAL\m_announcement_user.cs" />
     <Compile Include="DAL\m_return_fee_rule.cs" />
     <Compile Include="DAL\m_worker.cs" />
     <Compile Include="DAL\m_worker_excel_import.cs" />
@@ -181,6 +183,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\m_announcement.cs" />
+    <Compile Include="Models\m_announcement_user.cs" />
     <Compile Include="Models\m_return_fee_rule.cs" />
     <Compile Include="Models\m_worker.cs" />
     <Compile Include="Models\m_worker_history.cs" />
