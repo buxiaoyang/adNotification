@@ -132,7 +132,7 @@ namespace Client
                         String CONTENT = encrypt.DecryptString(result["CONTENT"]);
                         String CREATE_USER = encrypt.DecryptString(result["CREATE_USER"]);
                         DateTime CREATE_DATETIME = result["CREATE_DATETIME"];
-                        
+                        CONTENT = CONTENT.Replace("<img src=\"/", "<img src=\""+setting.server+"/");
                         this.webBrowserMain.DocumentText = "<h1>"+TITLE+"</h1><div>"+CONTENT+"</div>";
                         //flash the icon
                         hasMessage = true;
