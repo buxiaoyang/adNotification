@@ -116,38 +116,37 @@ namespace Client
             getMessage();
         }
 
+
+        WebClient wc = new WebClient();
+        Encrypt encrypt = new Encrypt();
         private void getMessage()
         {
             if (!hasMessage)
             {
                 try
                 {
-                    using (WebClient wc = new WebClient())
+                    var json = wc.DownloadString(setting.server + "/Message/Get?user=" + userName.ToLower());
+                    dynamic result = (new JavaScriptSerializer()).Deserialize<Object>(json);
+                    if (result["result"])
                     {
-                        var json = wc.DownloadString(setting.server + "/Message/Get?user=" + userName.ToLower());
-                        dynamic result = (new JavaScriptSerializer()).Deserialize<Object>(json);
-                        if (result["result"])
-                        {
-                            Encrypt encrypt = new Encrypt();
-                            messageID = encrypt.DecryptString(result["ID"]);
-                            String TITLE = encrypt.DecryptString(result["TITLE"]);
-                            String CONTENT = encrypt.DecryptString(result["CONTENT"]);
-                            String CREATE_USER = encrypt.DecryptString(result["CREATE_USER"]);
-                            DateTime CREATE_DATETIME = result["CREATE_DATETIME"];
-                            CONTENT = CONTENT.Replace("<img src=\"/", "<img src=\"" + setting.server + "/");
-                            this.webBrowserMain.DocumentText = "<h1>" + TITLE + "</h1><div>" + CONTENT + "</div>";
-                            //flash the icon
-                            hasMessage = true;
-                            timerIcon.Start();
-                        }
-                        else
-                        {
-                            this.webBrowserMain.DocumentText = "<h1>No Message</h1>";
-                            hasMessage = false;
-                            timerIcon.Stop();
-                            this.notifyIconMain.Icon = iconNotification;
-                            timeTick = false;
-                        }
+                        messageID = encrypt.DecryptString(result["ID"]);
+                        String TITLE = encrypt.DecryptString(result["TITLE"]);
+                        String CONTENT = encrypt.DecryptString(result["CONTENT"]);
+                        String CREATE_USER = encrypt.DecryptString(result["CREATE_USER"]);
+                        DateTime CREATE_DATETIME = result["CREATE_DATETIME"];
+                        CONTENT = CONTENT.Replace("<img src=\"/", "<img src=\"" + setting.server + "/");
+                        this.webBrowserMain.DocumentText = "<h1>" + TITLE + "</h1><div>" + CONTENT + "</div>";
+                        //flash the icon
+                        hasMessage = true;
+                        timerIcon.Start();
+                    }
+                    else
+                    {
+                        this.webBrowserMain.DocumentText = "<h1>No Message</h1>";
+                        hasMessage = false;
+                        timerIcon.Stop();
+                        this.notifyIconMain.Icon = iconNotification;
+                        timeTick = false;
                     }
                 }
                 catch (Exception ex)
@@ -168,15 +167,12 @@ namespace Client
                 //confirm message
                 try
                 {
-                    using (WebClient wc = new WebClient())
-                    {
-                        var json = wc.DownloadString(setting.server + "/Message/Confirm?user=" + userName.ToLower() + "&announcement=" + messageID);
-                        this.webBrowserMain.DocumentText = "<h1>No Message</h1>";
-                        hasMessage = false;
-                        timerIcon.Stop();
-                        this.notifyIconMain.Icon = iconNotification;
-                        timeTick = false;
-                    }
+                    var json = wc.DownloadString(setting.server + "/Message/Confirm?user=" + userName.ToLower() + "&announcement=" + messageID);
+                    this.webBrowserMain.DocumentText = "<h1>No Message</h1>";
+                    hasMessage = false;
+                    timerIcon.Stop();
+                    this.notifyIconMain.Icon = iconNotification;
+                    timeTick = false;
                 }
                 catch (Exception ex)
                 {
