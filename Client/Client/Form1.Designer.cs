@@ -73,7 +73,7 @@
             this.imageListMain.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListMain.ImageStream")));
             this.imageListMain.TransparentColor = System.Drawing.Color.Transparent;
             this.imageListMain.Images.SetKeyName(0, "Message.ico");
-            this.imageListMain.Images.SetKeyName(1, "MessageBlank.ico");
+            this.imageListMain.Images.SetKeyName(1, "MessageBlank.png");
             // 
             // timerIcon
             // 
@@ -91,7 +91,7 @@
             this.webBrowserMain.Location = new System.Drawing.Point(0, 0);
             this.webBrowserMain.MinimumSize = new System.Drawing.Size(20, 20);
             this.webBrowserMain.Name = "webBrowserMain";
-            this.webBrowserMain.Size = new System.Drawing.Size(470, 255);
+            this.webBrowserMain.Size = new System.Drawing.Size(649, 349);
             this.webBrowserMain.TabIndex = 1;
             // 
             // panel1
@@ -102,16 +102,16 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(470, 307);
+            this.panel1.Size = new System.Drawing.Size(649, 401);
             this.panel1.TabIndex = 2;
             // 
             // panel2
             // 
             this.panel2.Controls.Add(this.buttonOK);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 255);
+            this.panel2.Location = new System.Drawing.Point(0, 349);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(470, 52);
+            this.panel2.Size = new System.Drawing.Size(649, 52);
             this.panel2.TabIndex = 0;
             // 
             // panel3
@@ -119,13 +119,13 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(470, 307);
+            this.panel3.Size = new System.Drawing.Size(649, 401);
             this.panel3.TabIndex = 2;
             // 
             // buttonOK
             // 
             this.buttonOK.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.buttonOK.Location = new System.Drawing.Point(188, 6);
+            this.buttonOK.Location = new System.Drawing.Point(277, 6);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(93, 37);
             this.buttonOK.TabIndex = 0;
@@ -137,7 +137,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(470, 307);
+            this.ClientSize = new System.Drawing.Size(649, 401);
             this.Controls.Add(this.panel1);
             this.Name = "FormMain";
             this.ShowInTaskbar = false;
