@@ -1,12 +1,12 @@
 ﻿@model JSYCRM.Models.m_announcement
 
 @{
-    ViewBag.Title = "公告详情";
+    ViewBag.Title = "View Message";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="page-header">
-    <h4>公告详情</h4>
+    <h4>View Message</h4>
 </div>
 @if (ViewBag.message != null)
 { 
@@ -15,40 +15,56 @@
 <div class="row">
     <div class="span12">
         <input type="hidden" name="announcement_id" value="8" /><table class="table" width="95%" border="0" cellspacing="1" cellpadding="0">
-            <thead>
+            <tfoot>
                 <tr>
-                    <td colspan="2"><a class="btn btn-primary" href="~/Announcement/Edit/@(Model.ID)">编辑</a>&nbsp; <a class="btn btn-primary" href="~/Announcement/Delete/@(Model.ID)">删除</a>&nbsp; <a class="btn" href="javascript:history.go(-1)">返回</a></td>
+                    <td>&nbsp;</td>
+                    <td>
+                    <a class="btn btn-primary" href="~/Announcement/Edit/@(Model.ID)">Edit</a>&nbsp; 
+                    <a class="btn" href="javascript:history.go(-1)">Back</a></td>
                 </tr>
-            </thead>
+            </tfoot>
             <tbody width="100%">
-                <tr colspan="2">
-                    <td colspan="2">
-                        <span style="font-size: 18px;">@(Model.TITLE)&nbsp; 
-                        <span style="font-size: 12px;">
-                             @if (Model.PUBLISH == "发布中")
-                            {
-                                <span style="color:green;"><i class="icon-ok-circle"></i>发布中</span>
-                            }
-                            else
-                            {
-                                <span style="color:red;"><i class="icon-remove-circle"></i>已停用</span>
-                            }
-                        </span>
-                        </span> &nbsp; &nbsp;
+
+                <tr>
+                    <td class="tdleft">Title</td>
+                    <td>
+                        @(Model.TITLE)
+                    </td>
                 </tr>
                 <tr>
-                    <td width="7%" class="tdleft">作者信息</td>
+                    <td class="tdleft">To</td>
+                    <td>
+                        @(Model.DEPARTMENT)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdleft">Content</td>
+                    <td>
+                        @Html.Raw(Model.BODY)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdleft">Author</td>
                     <td>@(Model.CREATE_USER)</td>
                 </tr>
                 <tr>
-                    <td width="7%" class="tdleft">更新时间</td>
-                    <td>@(Model.UPDATE_DATETIME.ToString("yyyy-MM-dd H:mm"))</td>
-                </tr>
-                <tr>
-                    <td class="tdleft" style="vertical-align:top;">内容</td>
-                    <td>@Html.Raw(Model.BODY)</td>
+                    <td class="tdleft">Updated</td>
+                    <td style="width: 1000px;">@(Model.UPDATE_DATETIME.ToString("yyyy-MM-dd H:mm"))</td>
                 </tr>
             </tbody>
         </table>
     </div>
 </div>
+<script type="text/javascript">
+    $(function () {
+        $('#delete').click(function () {
+            if(confirm("Confirm Delete?")) {
+                return ture;
+            }
+            else
+            {
+                return false;
+            }
+        });
+    });
+</script>

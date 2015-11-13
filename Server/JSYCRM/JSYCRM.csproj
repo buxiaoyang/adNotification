@@ -264,6 +264,7 @@
     <Content Include="Images\working_platform.png" />
     <Content Include="Images\yingfukuan.png" />
     <Content Include="Images\yingshoukuan.png" />
+    <Content Include="Scripts\en.js" />
     <Content Include="Styles\background.png" />
     <Content Include="Styles\bootstrap-ie6.min.css" />
     <Content Include="Styles\bootstrap-responsive.min.css" />

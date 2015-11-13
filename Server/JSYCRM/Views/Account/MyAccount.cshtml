@@ -1,12 +1,12 @@
 ﻿@{
-    ViewBag.Title = "个人资料";
+    ViewBag.Title = "Profile";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
 <!-- Docs nav ================================================== -->
 <div class="page-header">
-    <h4>个人资料</h4>
+    <h4>Profile</h4>
 </div>
 <div class="row">
     <div class="span12"></div>
@@ -21,37 +21,37 @@
                     <tr>
                         <td>&nbsp;</td>
                         <td>
-                            <input name="submit" class="btn btn-primary" type="submit" value="保存" />
+                            <input name="submit" class="btn btn-primary" type="submit" value="Save" />
                         </td>
                     </tr>
                 </tfoot>
                 <tbody>
                     <tr>
-                        <td class="tdleft">邮箱&nbsp;<span style="color: red; font-weight:bold;">*</span></td>
+                        <td class="tdleft">Email</td>
                         <td>
                             <input class="text-input small-input" name="EMAIL" type="text" value="@(ViewBag.model_z_user.EMAIL.Trim())">
                         </td>
                     </tr>
                     <tr>
-                        <td class="tdleft">手机号码&nbsp;<span style="color: red; font-weight:bold;">*</span></td>
+                        <td class="tdleft">Phone</td>
                         <td>
                             <input class="text-input small-input" name="MOBILE_NUM" type="text" value="@(ViewBag.model_z_user.MOBILE_NUM.Trim())">
                         </td>
                     </tr>
-                    <tr>
-                        <td class="tdleft">座机号码</td>
+                    <tr style="display:none;">
+                        <td class="tdleft">Tel</td>
                         <td>
                             <input class="text-input small-input" name="COMPANY_TEL" type="text" value="@(ViewBag.model_z_user.COMPANY_TEL.Trim())">
                         </td>
                     </tr>
                     <tr>
-                        <td class="tdleft">修改密码</td>
+                        <td class="tdleft">Password</td>
                         <td>
-                            <input class="text-input small-input" type="password" name="PASSWORD" id="PASSWORD" value="" />(留空则不修改密码)
+                            <input class="text-input small-input" type="password" name="PASSWORD" id="PASSWORD" value="" />(Password will not update if keep blank)
                         </td>
                     </tr>
                     <tr>
-                        <td class="tdleft">重复密码</td>
+                        <td class="tdleft">Repeat Password</td>
                         <td>
                             <input class="text-input small-input" type="password" name="PASSWORD_RE" id="PASSWORD_RE" value="" />
                         </td>

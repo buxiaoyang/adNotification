@@ -1,12 +1,12 @@
 ﻿@model IEnumerable<JSYCRM.Models.m_announcement>
 @{
-    ViewBag.title = "公告管理";
+    ViewBag.title = "Messages";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="page-header">
     <p class="view"></p>
-    <h4>公告管理</h4>
+    <h4>Messages</h4>
     <p></p>
 </div>
 @if (ViewBag.message != null)
@@ -20,22 +20,22 @@
                 <li class="pull-left">
                     <ul class="nav pull-left">
                         <li class="pull-left">
-                            <div class="pull-left"><a style="margin-right: 5px;" id="delete" class="btn"><i class="icon-remove"></i>&nbsp;删除</a></div>
+                            <div class="pull-left"><a style="margin-right: 5px;" id="delete" class="btn"><i class="icon-remove"></i>&nbsp;Delete</a></div>
                         </li>
 
                         <li id="searchContent" class="pull-left">&nbsp;&nbsp;
-                            标题：
+                            Title:
                             <input id="search" type="text" class="input-medium search-query" name="search" value="@(ViewBag.search)">&nbsp;&nbsp;
                         </li>
                         <li class="pull-left">
                             <button type="button" id="dosearch" class="btn">
-                                <img src="~/Images/search.png">搜索</button>
+                                <img src="~/Images/search.png">Search</button>
                         </li>
 
                     </ul>
                 </li>
             </ul>
-            <div class="pull-right"><a class="btn btn-primary" href="~/Announcement/Create"><i class="icon-plus"></i>&nbsp; 新建公告</a></div>
+            <div class="pull-right"><a class="btn btn-primary" href="~/Announcement/Create"><i class="icon-plus"></i>&nbsp; New Message</a></div>
         </div>
         <div class="span12">
             <table class="table table-hover table-striped">
@@ -44,12 +44,10 @@
                         <th style="width: 49px;">
                             <input class="check_all" name="check_all" id="check_all" type="checkbox">&nbsp;
                         </th>
-                        <th style="width: 334px;">标题</th>
-                        <th style="width: 99px;">作者</th>
-                        <th style="width: 143px;">更新时间</th>
-                        <th style="width: 118px;">当前状态</th>
-                        <th style="width: 172px;">登录界面状态</th>
-                        <th style="width: 185px;">操作</th>
+                        <th style="width: 334px;">Title</th>
+                        <th style="width: 99px;">Author</th>
+                        <th style="width: 143px;">Updated</th>
+                        <th style="width: 185px;">Operation</th>
                     </tr>
                 </thead>
                 <tfoot>
@@ -57,37 +55,37 @@
                         <td colspan="7">
                             <div class="pagination">
                                 <div class="row pagination">
-                                    <div class="span2">共<b>@(ViewBag.recordCount)</b> 条记录 <b>@(ViewBag.page)</b>/<b>@(ViewBag.pageNum)</b> 页</div>
+                                    <div class="span2">Total<b>@(ViewBag.recordCount)</b> items, <b>@(ViewBag.page)</b>/<b>@(ViewBag.pageNum)</b> Page</div>
                                     <div class="span">
                                         <div>
                                             <ul>
                                                 @{
                                                     if (ViewBag.page > 1)
                                                     {
-                                                    <li><a href="~/Announcement/Index?page=1&search=@(HttpUtility.UrlEncode(HttpUtility.UrlEncode((string)ViewBag.search)))">首页</a></li>
-                                                    <li><a href="~/Announcement/Index?page=@(ViewBag.page - 1)&search=@(HttpUtility.UrlEncode(HttpUtility.UrlEncode((string)ViewBag.search)))">&lt; 上一页</a></li>
+                                                    <li><a href="~/Announcement/Index?page=1&search=@(HttpUtility.UrlEncode(HttpUtility.UrlEncode((string)ViewBag.search)))">First</a></li>
+                                                    <li><a href="~/Announcement/Index?page=@(ViewBag.page - 1)&search=@(HttpUtility.UrlEncode(HttpUtility.UrlEncode((string)ViewBag.search)))">&lt; Previous</a></li>
                                                     }
                                                     else
                                                     {
-                                                    <li><span>首页</span></li>
-                                                    <li><span>&lt; 上一页</span></li>
+                                                    <li><span>First</span></li>
+                                                    <li><span>&lt; Previous</span></li>
                                                     }
                                                     if (ViewBag.page < ViewBag.pageNum)
                                                     {
-                                                    <li><a href="~/Announcement/Index?page=@(ViewBag.page + 1)&search=@(HttpUtility.UrlEncode(HttpUtility.UrlEncode((string)ViewBag.search)))">下一页 &gt;</a></li>
-                                                    <li><a href="~/Announcement/Index?page=@(ViewBag.pageNum)&search=@(HttpUtility.UrlEncode(HttpUtility.UrlEncode((string)ViewBag.search)))">末页</a></li>
+                                                    <li><a href="~/Announcement/Index?page=@(ViewBag.page + 1)&search=@(HttpUtility.UrlEncode(HttpUtility.UrlEncode((string)ViewBag.search)))">Next &gt;</a></li>
+                                                    <li><a href="~/Announcement/Index?page=@(ViewBag.pageNum)&search=@(HttpUtility.UrlEncode(HttpUtility.UrlEncode((string)ViewBag.search)))">Last</a></li>
                                                     }
                                                     else
                                                     {
-                                                    <li><span>下一页 &gt;</span></li>
-                                                    <li><span>末页</span></li>
+                                                    <li><span>Next &gt;</span></li>
+                                                    <li><span>Last</span></li>
                                                     }
                                                 }
                                             </ul>
                                         </div>
                                     </div>
                                     <div class="span2">
-                                        跳转至第
+                                        Go to 
                                         <select style="width: auto; display: inline-block;" name="p" onchange="go_pagep(this.value)">
                                             @{
                                                 for (int i = 1; i <= ViewBag.pageNum; i++)
@@ -107,7 +105,7 @@
                                                          window.location = page;
                                                      }
                                         </script>
-                                        页
+                                         page
                                     </div>
                                 </div>
                                 <!-- End .pagination -->
@@ -125,51 +123,20 @@
                                 <input class="check_list" name="id[]" type="checkbox" value="@(item.ID)">
                             </td>
                             <td>
-                                <img style="width: 16px;" src="~/Images/user_img.png">
-                                &nbsp;
                                 <a href="~/Announcement/Details/@(item.ID)">@(item.TITLE)</a>
                             </td>
                             <td>@(item.CREATE_USER)</td>
                             <td>@(item.UPDATE_DATETIME.ToString("yyyy-MM-dd H:mm"))</td>
                             <td>
-                            @if (item.PUBLISH == "发布中")
-                            {
-                                <span style="color:green;"><i class="icon-ok-circle"></i>发布中</span>
-                            }
-                            else
-                            {
-                                <span style="color:red;"><i class="icon-remove-circle"></i>已停用</span>
-                            }
-                            </td>
-                            <td>
-                            @if (item.SHOW_IN_LOGIN == "显示")
-                            {
-                                <span style="color:green;"><i class="icon-ok-circle"></i>显示</span>
-                            }
-                            else
-                            {
-                                <span style="color:red;"><i class="icon-remove-circle"></i>不显示</span>
-                            }
-                            </td>
-                            <td>
-                                @if (item.PUBLISH == "发布中")
-                                {
-                                    <a href="~/Announcement/Publish/@(item.ID)?status=stop" title="停用">停用</a>
-                                }
-                                else
-                                {
-                                    <a href="~/Announcement/Publish/@(item.ID)?status=publish" title="发布">发布</a>
-                                }
-                                &nbsp;
-                                <a href="~/Announcement/Details/@(item.ID)" title="查看">查看</a>&nbsp;
-								<a href="~/Announcement/Edit/@(item.ID)" title="编辑">编辑</a>
+                                <a href="~/Announcement/Details/@(item.ID)" title="View"><i class="icon-search">&nbsp; View</i></a>&nbsp;
+                                <a href="~/Announcement/Edit/@(item.ID)" title="Edit"><i class="icon-edit">&nbsp; Edit</i></a>
                             </td>
                         </tr>
                         }
                         if (Model.Count() == 0)
                         {
                         <tr>
-                            <td colspan="8" style="color: red; text-align: center;">没有数据</td>
+                            <td colspan="8" style="color: red; text-align: center;">No Message</td>
                         </tr>
                         }
                     }
@@ -185,7 +152,7 @@
             $("input[class='check_list']").prop('checked', $(this).prop("checked"));
         });
         $('#delete').click(function () {
-            if (confirm("确定要删除吗？")) {
+            if(confirm("Confirm Delete?")) {
                 $("#announcement_form").attr('action', 'Delete');
                 $("#announcement_form").submit();
             }

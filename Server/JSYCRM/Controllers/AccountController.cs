@@ -31,11 +31,6 @@ namespace JSYCRM.Controllers
                 var PASSWORD = collection["PASSWORD"].Trim();
                 var PASSWORD_RE = collection["PASSWORD_RE"].Trim();
                 Models.z_user model_z_user = ViewBag.model_z_user;
-                if (EMAIL == null || EMAIL == "" || MOBILE_NUM == "" || MOBILE_NUM == null)
-                {
-                    ViewBag.message = "修改失败，邮箱和手机号码不能为空";
-                    return View(); 
-                }
                 if (PASSWORD != null && PASSWORD != "")
                 {
                     if (PASSWORD == PASSWORD_RE)
@@ -44,7 +39,7 @@ namespace JSYCRM.Controllers
                     }
                     else
                     {
-                        ViewBag.message = "修改失败，两次输入密码不匹配";
+                        ViewBag.message = "Modify failed, password does not match";
                         return View();
                     }
                 }
@@ -53,12 +48,12 @@ namespace JSYCRM.Controllers
                 model_z_user.MOBILE_NUM = MOBILE_NUM;
                 DAL.z_user dal_z_user = new DAL.z_user();
                 dal_z_user.Update(model_z_user);
-                ViewBag.message = "修改成功";
+                ViewBag.message = "Modify Successfully";
                 return View();
             }
             catch
             {
-                ViewBag.message = "修改失败";
+                ViewBag.message = "Modify failed";
                 return View();
             }
         }
@@ -68,6 +63,7 @@ namespace JSYCRM.Controllers
         [HttpGet]
         public ActionResult Login(String returnUrl)
         {
+            ViewBag.Title = "Login";
             DAL.m_announcement dal_m_announcement = new DAL.m_announcement();
             List<Models.m_announcement> m_announcement_list = dal_m_announcement.GetListModelByPage(true);
             try
@@ -98,12 +94,12 @@ namespace JSYCRM.Controllers
                         }
                     }
                 }
-                ViewBag.errorMessage = "请先登录...";
+                ViewBag.errorMessage = "Please Login...";
                 return View(m_announcement_list);
             }
             catch
             {
-                ViewBag.errorMessage = "请先登录...";
+                ViewBag.errorMessage = "Please Login...";
                 return View(m_announcement_list);
             }
         }
@@ -123,7 +119,7 @@ namespace JSYCRM.Controllers
                 //验证验证码
                 if (Session["ValidateCode"].ToString() != valicode)
                 {
-                    ViewBag.errorMessage = "验证码不正确";
+                    ViewBag.errorMessage = "Incorrect verification code";
                     return View(m_announcement_list);
                 }
                 //此处验证用户名、密码
@@ -131,7 +127,7 @@ namespace JSYCRM.Controllers
                 Models.z_user model_z_user = dal_user.GetLoginModel(name.Trim(), Common.Common.MD5(password.Trim()));
                 if (model_z_user == null)
                 {
-                    ViewBag.errorMessage = "用户名或密码不正确";
+                    ViewBag.errorMessage = "User name or password is incorrect";
                     return View(m_announcement_list);
                 }
                 //验证成功
@@ -158,7 +154,7 @@ namespace JSYCRM.Controllers
             }
             catch
             {
-                ViewBag.errorMessage = "验证码不正确";
+                ViewBag.errorMessage = "Incorrect verification code";
                 return View(m_announcement_list);
             }
         }

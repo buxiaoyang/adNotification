@@ -41,7 +41,7 @@ namespace JSYCRM.Controllers
             }
             catch
             {
-                ViewBag.message = "查看失败，员工不存在";
+                ViewBag.message = "Item does not exist";
                 return View();
             }
         }
@@ -59,17 +59,15 @@ namespace JSYCRM.Controllers
             {
                 Models.z_user session_model_z_user =  (Models.z_user)ViewBag.model_z_user;
                 string TITLE =  collection["title"].Trim();
-                string TITLE_COLOR = collection["color"].Trim();
-                string PUBLISH = collection["status"].Trim();
-                string SHOW_IN_LOGIN = collection["isshow"].Trim();
+                string To = collection["to"].Trim();
                 string BODY = collection["content"].Trim();
                 Models.m_announcement model_m_announcement = new Models.m_announcement();
                 model_m_announcement.ID = Guid.NewGuid();
                 model_m_announcement.TITLE = TITLE;
-                model_m_announcement.TITLE_COLOR = TITLE_COLOR;
-                model_m_announcement.PUBLISH = PUBLISH;
-                model_m_announcement.SHOW_IN_LOGIN = SHOW_IN_LOGIN;
-                model_m_announcement.DEPARTMENT = "";
+                model_m_announcement.TITLE_COLOR = "";
+                model_m_announcement.PUBLISH = "";
+                model_m_announcement.SHOW_IN_LOGIN = "";
+                model_m_announcement.DEPARTMENT = To;
                 model_m_announcement.BODY = BODY;
                 model_m_announcement.CREATE_USER_ID = session_model_z_user.ID;
                 model_m_announcement.CREATE_DATETIME = DateTime.Now;
@@ -78,11 +76,11 @@ namespace JSYCRM.Controllers
                 model_m_announcement.DELETE_FLG = "0";
                 DAL.m_announcement dal_m_announcement = new DAL.m_announcement();
                 dal_m_announcement.Add(model_m_announcement);
-                return RedirectToAction("Index", new { message = HttpUtility.UrlEncode("新建成功") });
+                return RedirectToAction("Index", new { message = HttpUtility.UrlEncode("Create Succeed") });
             }
             catch
             {
-                ViewBag.message = "新建失败";
+                ViewBag.message = "Create Failed";
                 return View();
             }
         }
@@ -104,23 +102,19 @@ namespace JSYCRM.Controllers
             {
                 Models.z_user session_model_z_user = (Models.z_user)ViewBag.model_z_user;
                 string TITLE = collection["title"].Trim();
-                string TITLE_COLOR = collection["color"].Trim();
-                string PUBLISH = collection["status"].Trim();
-                string SHOW_IN_LOGIN = collection["isshow"].Trim();
+                string To = collection["to"].Trim();
                 string BODY = collection["content"].Trim();
                 model_m_announcement.TITLE = TITLE;
-                model_m_announcement.TITLE_COLOR = TITLE_COLOR;
-                model_m_announcement.PUBLISH = PUBLISH;
-                model_m_announcement.SHOW_IN_LOGIN = SHOW_IN_LOGIN;
+                model_m_announcement.DEPARTMENT = To;
                 model_m_announcement.BODY = BODY;
                 model_m_announcement.UPDATE_USER_ID = session_model_z_user.ID;
                 model_m_announcement.UPDATE_DATETIME = DateTime.Now;
                 dal_m_announcement.Update(model_m_announcement);
-                return RedirectToAction("Index", new { message = HttpUtility.UrlEncode("编辑成功") });
+                return RedirectToAction("Index", new { message = HttpUtility.UrlEncode("Edit Succeed") });
             }
             catch
             {
-                ViewBag.message = "编辑失败";
+                ViewBag.message = "Edit Failed";
                 return View(model_m_announcement);
             }
         }
@@ -135,11 +129,11 @@ namespace JSYCRM.Controllers
                 IDlist = "'" + IDlist + "'";
                 DAL.m_announcement dal_m_announcement = new DAL.m_announcement();
                 dal_m_announcement.DeleteList(IDlist);
-                return RedirectToAction("Index", new { message = HttpUtility.UrlEncode("删除成功") });
+                return RedirectToAction("Index", new { message = HttpUtility.UrlEncode("Delete Succeed") });
             }
             catch
             {
-                return RedirectToAction("Index", new { message = HttpUtility.UrlEncode("删除失败") });
+                return RedirectToAction("Index", new { message = HttpUtility.UrlEncode("Delete Failed") });
             }
         }
 
@@ -149,11 +143,11 @@ namespace JSYCRM.Controllers
             {
                 DAL.m_announcement dal_m_announcement = new DAL.m_announcement();
                 dal_m_announcement.Delete(new Guid(id));
-                return RedirectToAction("Index", new { message = HttpUtility.UrlEncode("删除成功") });
+                return RedirectToAction("Index", new { message = HttpUtility.UrlEncode("Delete Succeed") });
             }
             catch
             {
-                return RedirectToAction("Index", new { message = HttpUtility.UrlEncode("删除失败") });
+                return RedirectToAction("Index", new { message = HttpUtility.UrlEncode("Delete Failed") });
             }
         }
 

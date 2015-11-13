@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "退出成功";
+    ViewBag.Title = "Logout Succeed";
     Layout = "~/Views/Shared/_LayoutBasic.cshtml";
 }
 
@@ -10,19 +10,10 @@
     }
 </style>
 <legend>
-    <h3>操作成功！</h3>
+    <h3>Logout Succeed!</h3>
 </legend>
-<div class="alert alert-success">已经退出！</div>
-<p class="jump">页面自动 <a id="href" href="~/Account/Login">跳转</a> 等待时间： <b id="wait">1</b></p>
-<div class="row-fluid wukong">
-    <div class="span3">
-        <img src="~/Images/logo.png" class="logo" alt="金硕源CRM" />
-    </div>
-    <div class="span9">
-        <p>金硕源人力资源服务有限公司 2014</p>
-        <p><small><a href="#" target="_blank">使用帮助</a><span class="muted">&middot;</span><a href="#" target="_blank">技术支持</a><span class="muted">&middot;</span><a href="#" target="_blank">联系我们</a></small></p>
-    </div>
-</div>
+<div class="alert alert-success">Logout Succeed!</div>
+<p class="jump">Automatic <a id="href" href="/">return to the previous page</a> time:<b id="wait">3</b></p>
 <script type="text/javascript">
     (function () {
         var wait = document.getElementById('wait'), href = document.getElementById('href').href;

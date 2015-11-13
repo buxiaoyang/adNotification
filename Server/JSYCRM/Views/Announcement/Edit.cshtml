@@ -1,13 +1,13 @@
 ﻿@model JSYCRM.Models.m_announcement
 
 @{
-    ViewBag.Title = "编辑公告";
+    ViewBag.Title = "Edit Message";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
 <script type="text/javascript" src="~/Scripts/kindeditor-all-min.js"></script>
-<script type="text/javascript" src="~/Scripts/zh_CN.js"></script>
+<script type="text/javascript" src="~/Scripts/en.js"></script>
 <script type="text/javascript" src="~/Scripts/jscolor/jscolor.js"></script>
 <link rel="stylesheet" href="~/Styles/kindeditor.css" type="text/css" />
 <script type="text/javascript">
@@ -29,7 +29,7 @@
 
 <!-- Docs nav ================================================== -->
 <div class="page-header">
-    <h4>编辑公告</h4>
+    <h4>Edit Message</h4>
 </div>
 <div class="row">
     <div class="span12">
@@ -39,70 +39,35 @@
         }
         <form action="~/Announcement/Edit/@(Model.ID)" method="post">
             <table class="table" border="0" cellspacing="1" cellpadding="0">
-                <thead>
-                    <tr>
-                        <td colspan="2">
-                            <input name="submit" class="btn btn-primary" type="submit" value="保存" />
-                            &nbsp;<input class="btn" type="button" onclick="javascript: history.go(-1)" value="返回" /></td>
-                    </tr>
-                </thead>
                 <tfoot>
                     <tr>
-                        <td colspan="2">
-                            <input class="btn btn-primary" name="submit" type="submit" value="保存" />
+                        <td>&nbsp;</td>
+                        <td>
+                            <input class="btn btn-primary" name="submit" type="submit" value="Save" />
                             &nbsp;
-                            <input class="btn btn" type="button" onclick="    javascript: history.go(-1)" value="返回" /></td>
+                            <input class="btn btn" type="button" onclick="    javascript: history.go(-1)" value="Back" />
+                        </td>
                     </tr>
                 </tfoot>
                 <tbody>
-                    <th colspan="2">基本信息</th>
                     <tr>
-                        <td class="tdleft">标题</td>
+                        <td class="tdleft">Title&nbsp;<span style="color: red; font-weight:bold;">*</span></td>
                         <td>
-                            <input type="text" name="title" class="span4" value="@(Model.TITLE)" />(100个字符以内)</td>
-                    </tr>
-                    <tr>
-                        <td class="tdleft">标题颜色</td>
-                        <td>
-                            <input class="color" value="@(Model.TITLE_COLOR)" name="color" /></td>
-                    </tr>
-                    <tr>
-                        <td class="tdleft">是否发布</td>
-                        <td>
-                            @if (Model.PUBLISH == "发布中")
-                            {
-                                @:<input type="radio" value="发布中" checked name="status" />是 &nbsp;
-								@:<input type="radio" value="已停用" name="status" />否</td>
-                            }
-                            else
-                            {
-                                @:<input type="radio" value="发布中" name="status" />是 &nbsp;
-								@:<input type="radio" value="已停用" checked name="status" />否</td>
-                            }
+                            <input type="text" id="title" name="title" class="span4" value="@(Model.TITLE)" />(100 characters or less)
                         </td>
                     </tr>
                     <tr>
-                        <td class="tdleft">是否在登录界面显示</td>
+                        <td class="tdleft">To&nbsp;<span style="color: red; font-weight:bold;">*</span></td>
                         <td>
-                            @if (Model.SHOW_IN_LOGIN == "显示")
-                            {
-                                @:<input type="radio" value="显示" checked name="isshow" />是 &nbsp;
-                                @:<input type="radio" value="不显示"  name="isshow" />否
-                            }
-                            else
-                            {
-                                @:<input type="radio" value="显示"  name="isshow" />是 &nbsp;
-                                @:<input type="radio" value="不显示" checked name="isshow" />否
-                            }
-
-
+                            <textarea name="to" id="to" style="width: 900px; height: 50px;">@(Model.DEPARTMENT)</textarea>
                         </td>
                     </tr>
                     <tr>
-                        <td class="tdleft">内容</td>
+                        <td class="tdleft">Content&nbsp;<span style="color: red; font-weight:bold;">*</span></td>
                         <td>
-                            <textarea name="content" id="content" style="width: 1000px; height: 350px;">@Html.Raw(Model.BODY)</textarea></td>
-                    </tr>
+                            <textarea name="content" id="content" style="width: 1000px; height: 350px;">@Html.Raw(Model.BODY)</textarea>
+                        </td>
+                    </tr>                
                 </tbody>
             </table>
         </form>
@@ -131,10 +96,5 @@
         $("input[type=submit]").click(function () {
             isFormDataChanged = 0;
         });
-        window.onbeforeunload = function () {
-            if (isFormDataChanged >= 2) {
-                return "您的修改内容还没有保存，您确定离开吗？";
-            }
-        }
     });
 </script>
