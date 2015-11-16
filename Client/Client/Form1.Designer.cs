@@ -59,12 +59,12 @@
             this.contextMenuStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItemNotifications});
             this.contextMenuStripMain.Name = "contextMenuStripMain";
-            this.contextMenuStripMain.Size = new System.Drawing.Size(176, 56);
+            this.contextMenuStripMain.Size = new System.Drawing.Size(144, 28);
             // 
             // toolStripMenuItemNotifications
             // 
             this.toolStripMenuItemNotifications.Name = "toolStripMenuItemNotifications";
-            this.toolStripMenuItemNotifications.Size = new System.Drawing.Size(175, 24);
+            this.toolStripMenuItemNotifications.Size = new System.Drawing.Size(143, 24);
             this.toolStripMenuItemNotifications.Text = "Message";
             this.toolStripMenuItemNotifications.Click += new System.EventHandler(this.toolStripMenuItemNotifications_Click);
             // 
@@ -82,7 +82,7 @@
             // 
             // timerMain
             // 
-            this.timerMain.Interval = 60000;
+            this.timerMain.Interval = 600000;
             this.timerMain.Tick += new System.EventHandler(this.timerMain_Tick);
             // 
             // webBrowserMain

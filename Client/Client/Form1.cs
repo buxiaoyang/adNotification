@@ -149,6 +149,15 @@ namespace Client
                         this.notifyIconMain.Icon = iconNotification;
                         timeTick = false;
                     }
+
+                    try
+                    {
+                        timerMain.Interval = int.Parse(result["interval"]);
+                    }
+                    catch(Exception ex)
+                    {
+                        timerMain.Interval = 600000;
+                    }
                 }
                 catch (Exception ex)
                 {
