@@ -8,14 +8,16 @@
 <script type="text/javascript" src="~/Scripts/en.js"></script>
 <script type="text/javascript" src="~/Scripts/jscolor/jscolor.js"></script>
 <link rel="stylesheet" href="~/Styles/kindeditor.css" type="text/css" />
-<script type="text/javascript">var editor;
+<script type="text/javascript">
+    var editor;
     KindEditor.ready(function (K) {
         editor = K.create('textarea[name="content"]', {
             uploadJson: '/Home/Upload',
             allowFileManager: true,
             loadStyleMode: false
         });
-    });</script>
+    });   
+</script>
 
 <!-- Docs nav ================================================== -->
 <div class="page-header">
@@ -47,7 +49,9 @@
                     <tr>
                         <td class="tdleft">To&nbsp;<span style="color: red; font-weight:bold;">*</span></td>
                         <td>
-                            <textarea name="to" id="to" style="width: 900px; height: 50px;"></textarea>
+                            <div id="btnAddUserList"><ul class='nav nav-list' style="cursor:default;"></ul></div>
+                            <input type="text" name="to" id="to" style="display:none;"/>
+                            <input class="btn btn" id="btnAddUser" type="button" value="Add" />
                         </td>
                     </tr>
                     <tr>
@@ -61,3 +65,15 @@
         </form>
     </div>
 </div>
+
+<div id="dialog" style="display:none;" title="Choose User/Group">
+    <div>
+        name
+        <input type="text" id="filterTitle" name="title" class="span4" value="" />
+        <input class="btn btn" id="btnFilterUser" type="button" value="Search" />
+    </div>
+    <div id="userFilterList" style="overflow-y: auto; height: 380px; padding: 5px; ">
+    </div>
+</div>
+
+<script type="text/javascript" src="~/Scripts/userPicker.js"></script>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -14,9 +15,58 @@ namespace JSYCRM.DAL
         { }
         #region  BasicMethod
 
+        private DAL.ldap_cn dal_ldap_cn = new ldap_cn();
+        private Models.z_parameter model_z_parameter = (new z_parameter()).GetModel("LDAP", "Domain");
+
+        public void addGroupList(Models.ldap_cn model, ArrayList toList)
+        {
+            ArrayList itemList = dal_ldap_cn.getUserGroupInGroup(model.PATH);
+            foreach(Models.ldap_cn model_ldap_cn in itemList)
+            {
+                string account = model_z_parameter.VALUE + "\\" + model_ldap_cn.ACCOUNT;
+                if(model_ldap_cn.TYPE == "user" && !toList.Contains(account))
+                {
+                    toList.Add(account);
+                }
+                else if(model_ldap_cn.TYPE == "group")
+                {
+                    addGroupList(model_ldap_cn, toList);
+                }
+            }
+        }
+
         public bool AddList(Models.m_announcement model_m_announcement)
         {
-            String[] toList = model_m_announcement.DEPARTMENT.Split(';');
+           
+            ArrayList toList = new ArrayList();
+            var items = model_m_announcement.DEPARTMENT.Split(new string[] {";#;"}, StringSplitOptions.None);
+            foreach(string item in items)
+            {
+                var attrs = item.Split(new string[] { "%;" }, StringSplitOptions.None);
+                if (attrs.Count() == 4)
+                {
+                    string type = attrs[0].Substring(5);
+                    string path = attrs[3].Substring(5);
+                    string name = attrs[2].Substring(5);
+                    string account = model_z_parameter.VALUE + "\\" + attrs[1].Substring(8);
+                    if (type == "user" && !toList.Contains(account))
+                    {
+                        toList.Add(account);
+                    }
+                    else if(type == "group")
+                    {
+                        Models.ldap_cn model = new Models.ldap_cn();
+                        model.TYPE = type;
+                        model.PATH = path;
+                        model.NAME = name;
+                        model.EMAIL = "";
+                        model.ACCOUNT = account;
+                        addGroupList(model, toList);
+                    }
+
+                }
+            }
+
             DAL.m_announcement_user dal_m_announcement_user = new DAL.m_announcement_user();
             dal_m_announcement_user.Delete(model_m_announcement.ID);
             foreach (string toItem in toList)

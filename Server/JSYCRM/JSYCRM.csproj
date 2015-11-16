@@ -69,6 +69,8 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.DirectoryServices.Protocols" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -155,6 +157,7 @@
     <Compile Include="Controllers\AnnouncementController.cs" />
     <Compile Include="Controllers\ImportWorkerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LDAPController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\ParameterController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
@@ -162,6 +165,7 @@
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\MyWorkerController.cs" />
     <Compile Include="Controllers\WorkerPoolController.cs" />
+    <Compile Include="DAL\ldap_cn.cs" />
     <Compile Include="DAL\m_announcement.cs" />
     <Compile Include="DAL\m_announcement_user.cs" />
     <Compile Include="DAL\m_return_fee_rule.cs" />
@@ -182,6 +186,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ldap_cn.cs" />
     <Compile Include="Models\m_announcement.cs" />
     <Compile Include="Models\m_announcement_user.cs" />
     <Compile Include="Models\m_return_fee_rule.cs" />
@@ -268,6 +273,7 @@
     <Content Include="Images\yingfukuan.png" />
     <Content Include="Images\yingshoukuan.png" />
     <Content Include="Scripts\en.js" />
+    <Content Include="Scripts\userPicker.js" />
     <Content Include="Styles\background.png" />
     <Content Include="Styles\bootstrap-ie6.min.css" />
     <Content Include="Styles\bootstrap-responsive.min.css" />
@@ -629,6 +635,7 @@
     <Content Include="Views\Shared\NoPermission.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Properties\PublishProfiles\adNotification.pubxml" />
     <None Include="Properties\PublishProfiles\JSYCRM.pubxml" />
     <Content Include="Views\Account\TestRemoveSession.cshtml" />
     <Content Include="Views\Announcement\Index.cshtml" />

@@ -59,7 +59,9 @@
                     <tr>
                         <td class="tdleft">To&nbsp;<span style="color: red; font-weight:bold;">*</span></td>
                         <td>
-                            <textarea name="to" id="to" style="width: 900px; height: 50px;">@(Model.DEPARTMENT)</textarea>
+                            <div id="btnAddUserList"><ul class='nav nav-list' style="cursor:default;"></ul></div>
+                            <input type="text" name="to" id="to" style="display:none;" value="@(Model.DEPARTMENT)"/>
+                            <input class="btn btn" id="btnAddUser" type="button" value="Add" />
                         </td>
                     </tr>
                     <tr>
@@ -73,28 +75,19 @@
         </form>
     </div>
 </div>
+<div id="dialog" style="display:none;" title="Choose User/Group">
+    <div>
+        name
+        <input type="text" id="filterTitle" name="title" class="span4" value="" />
+        <input class="btn btn" id="btnFilterUser" type="button" value="Search" />
+    </div>
+    <div id="userFilterList" style="overflow-y: auto; height: 380px; padding: 5px; ">
+    </div>
+</div>
+
+<script type="text/javascript" src="~/Scripts/userPicker.js"></script>
+
 <script type="text/javascript">
-    $(function () {
-        $("textarea").change(function () {
-            isFormDataChanged++;
-            if (isFormDataChanged > 3) {
-                isFormDataChanged = 3;
-            }
-        });
-        $("select").change(function () {
-            isFormDataChanged++;
-            if (isFormDataChanged > 3) {
-                isFormDataChanged = 3;
-            }
-        });
-        $("input[type!=submit]").change(function () {
-            isFormDataChanged++;
-            if (isFormDataChanged > 3) {
-                isFormDataChanged = 3;
-            }
-        });
-        $("input[type=submit]").click(function () {
-            isFormDataChanged = 0;
-        });
-    });
+    refreshFrom($("#to").val(), true);
+    buildRemoveUserFunction();
 </script>

@@ -171,24 +171,7 @@ namespace JSYCRM.DAL
                 return false;
             }
         }
-        /// <summary>
-        /// 批量删除数据
-        /// </summary>
-        public bool DeleteList(string IDlist)
-        {
-            StringBuilder strSql = new StringBuilder();
-            strSql.Append("delete from z_parameter ");
-            strSql.Append(" where ID in (" + IDlist + ")  ");
-            int rows = DbHelperSQL.ExecuteSql(strSql.ToString());
-            if (rows > 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
+ 
 
 
         /// <summary>
@@ -204,6 +187,30 @@ namespace JSYCRM.DAL
 					new SqlParameter("@ID", SqlDbType.UniqueIdentifier,16)			};
             parameters[0].Value = ID;
 
+            JSYCRM.Models.z_parameter model = new JSYCRM.Models.z_parameter();
+            DataSet ds = DbHelperSQL.Query(strSql.ToString(), parameters);
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                return DataRowToModel(ds.Tables[0].Rows[0]);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public JSYCRM.Models.z_parameter GetModel(String TYPE, String NAME)
+        {
+
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append("select  top 1 ID,TYPE,NAME,VALUE,DESCRIPTION,CREATE_USER_ID,CREATE_DATETIME,UPDATE_USER_ID,UPDATE_DATETIME,DELETE_FLG from z_parameter ");
+            strSql.Append(" where TYPE=@TYPE and NAME=@NAME");
+            SqlParameter[] parameters = {
+					new SqlParameter("@TYPE", SqlDbType.NVarChar, 50),
+                    new SqlParameter("@NAME", SqlDbType.NVarChar, 50)
+                    			};
+            parameters[0].Value = TYPE;
+            parameters[1].Value = NAME;
             JSYCRM.Models.z_parameter model = new JSYCRM.Models.z_parameter();
             DataSet ds = DbHelperSQL.Query(strSql.ToString(), parameters);
             if (ds.Tables[0].Rows.Count > 0)
@@ -269,7 +276,7 @@ namespace JSYCRM.DAL
                 {
                     if (row["UPDATE_USER"] != null && row["UPDATE_USER"].ToString() != "")
                     {
-                        model.CREATE_USER = row["UPDATE_USER"].ToString();
+                        model.UPDATE_USER = row["UPDATE_USER"].ToString();
                     }
                     if (row["CREATE_USER"] != null && row["CREATE_USER"].ToString() != "")
                     {
@@ -285,24 +292,35 @@ namespace JSYCRM.DAL
         /// <summary>
         /// 获得数据列表
         /// </summary>
-        public DataSet GetList(string NAME)
+        public DataSet GetList(string TYPE)
         {
-            NAME = Common.Common.FilteSQLStr(NAME);
+            TYPE = Common.Common.FilteSQLStr(TYPE);
             StringBuilder strSql = new StringBuilder();
             strSql.Append(" select a.*, b.LAST_NAME as CREATE_USER, c.LAST_NAME as UPDATE_USER from z_parameter as a  ");
             strSql.Append(" left join z_user as b on a.CREATE_USER_ID = b.ID ");
             strSql.Append(" left join z_user as c on a.UPDATE_USER_ID = c.ID ");
-            strSql.Append(" where a.NAME = '" + NAME + "' ");
+            strSql.Append(" where a.TYPE = '" + TYPE + "' order by a.NAME ");
             return DbHelperSQL.Query(strSql.ToString());
+        }
+
+        public ICollection GetListOfType(string TYPE)
+        {
+            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+            DataTable dt = GetList(TYPE).Tables[0];
+            foreach(DataRow dr in dt.Rows)
+            {
+                dictionary.Add(dr["NAME"].ToString(), dr["VALUE"].ToString());
+            }
+            return dictionary;
         }
 
         /// <summary>
         /// 获得数据列表
         /// </summary>
-        public List<Models.z_parameter> GetModelList(string NAME)
+        public List<Models.z_parameter> GetModelList(string TYPE)
         {
             List<Models.z_parameter> z_parameter_list = new List<Models.z_parameter>();
-            DataSet ds = GetList(NAME);
+            DataSet ds = GetList(TYPE);
             DataTable dt = ds.Tables[0];
             foreach(DataRow row in dt.Rows) {
                 Models.z_parameter model_z_parameter = DataRowToModel(row);
@@ -311,98 +329,7 @@ namespace JSYCRM.DAL
             return z_parameter_list;
         }
 
-        /// <summary>
-        /// 获得前几行数据
-        /// </summary>
-        public DataSet GetList(int Top, string strWhere, string filedOrder)
-        {
-            StringBuilder strSql = new StringBuilder();
-            strSql.Append("select ");
-            if (Top > 0)
-            {
-                strSql.Append(" top " + Top.ToString());
-            }
-            strSql.Append(" ID,TYPE,NAME,VALUE,DESCRIPTION,CREATE_USER_ID,CREATE_DATETIME,UPDATE_USER_ID,UPDATE_DATETIME,DELETE_FLG ");
-            strSql.Append(" FROM z_parameter ");
-            if (strWhere.Trim() != "")
-            {
-                strSql.Append(" where " + strWhere);
-            }
-            strSql.Append(" order by " + filedOrder);
-            return DbHelperSQL.Query(strSql.ToString());
-        }
-
-        /// <summary>
-        /// 获取记录总数
-        /// </summary>
-        public int GetRecordCount(string strWhere)
-        {
-            StringBuilder strSql = new StringBuilder();
-            strSql.Append("select count(1) FROM z_parameter ");
-            if (strWhere.Trim() != "")
-            {
-                strSql.Append(" where " + strWhere);
-            }
-            object obj = DbHelperSQL.GetSingle(strSql.ToString());
-            if (obj == null)
-            {
-                return 0;
-            }
-            else
-            {
-                return Convert.ToInt32(obj);
-            }
-        }
-        /// <summary>
-        /// 分页获取数据列表
-        /// </summary>
-        public DataSet GetListByPage(string strWhere, string orderby, int startIndex, int endIndex)
-        {
-            StringBuilder strSql = new StringBuilder();
-            strSql.Append("SELECT * FROM ( ");
-            strSql.Append(" SELECT ROW_NUMBER() OVER (");
-            if (!string.IsNullOrEmpty(orderby.Trim()))
-            {
-                strSql.Append("order by T." + orderby);
-            }
-            else
-            {
-                strSql.Append("order by T.ID desc");
-            }
-            strSql.Append(")AS Row, T.*  from z_parameter T ");
-            if (!string.IsNullOrEmpty(strWhere.Trim()))
-            {
-                strSql.Append(" WHERE " + strWhere);
-            }
-            strSql.Append(" ) TT");
-            strSql.AppendFormat(" WHERE TT.Row between {0} and {1}", startIndex, endIndex);
-            return DbHelperSQL.Query(strSql.ToString());
-        }
-
-        /*
-        /// <summary>
-        /// 分页获取数据列表
-        /// </summary>
-        public DataSet GetList(int PageSize,int PageIndex,string strWhere)
-        {
-            SqlParameter[] parameters = {
-                    new SqlParameter("@tblName", SqlDbType.VarChar, 255),
-                    new SqlParameter("@fldName", SqlDbType.VarChar, 255),
-                    new SqlParameter("@PageSize", SqlDbType.Int),
-                    new SqlParameter("@PageIndex", SqlDbType.Int),
-                    new SqlParameter("@IsReCount", SqlDbType.Bit),
-                    new SqlParameter("@OrderType", SqlDbType.Bit),
-                    new SqlParameter("@strWhere", SqlDbType.VarChar,1000),
-                    };
-            parameters[0].Value = "z_parameter";
-            parameters[1].Value = "ID";
-            parameters[2].Value = PageSize;
-            parameters[3].Value = PageIndex;
-            parameters[4].Value = 0;
-            parameters[5].Value = 0;
-            parameters[6].Value = strWhere;	
-            return DbHelperSQL.RunProcedure("UP_GetRecordByPage",parameters,"ds");
-        }*/
+        
 
         #endregion  BasicMethod
         #region  ExtensionMethod

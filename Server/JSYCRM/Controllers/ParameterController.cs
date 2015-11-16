@@ -12,105 +12,37 @@ namespace JSYCRM.Controllers
     public class ParameterController : Controller
     {
 
-        public ActionResult Index(String Name, String message)
+        public ActionResult Index(String Type, String message)
         {
-            Name = HttpUtility.UrlDecode(Name);
             message = HttpUtility.UrlDecode(message);
-            if (Name == "" || Name == null)
+            if (Type == "" || Type == null)
             {
-                ViewBag.Name = "分公司";
+                ViewBag.Type = "Client";
             }
             else
             {
-                ViewBag.Name = Name;
+                ViewBag.Type = Type;
             }
             if (message != null && message != "")
             {
                 ViewBag.message = message;
             }
             DAL.z_parameter dal_z_parameter = new DAL.z_parameter();
-            List<Models.z_parameter> z_parameter_list = dal_z_parameter.GetModelList(ViewBag.Name);
+            List<Models.z_parameter> z_parameter_list = dal_z_parameter.GetModelList(ViewBag.Type);
             return View(z_parameter_list);
         }
 
-        [HttpPost]
-        public ActionResult Delete(String Name, FormCollection collection)
+        public ActionResult Edit(String Type, String ID)
         {
-            Name = HttpUtility.UrlDecode(Name);
-            try
-            {
-                String IDlist = collection["parameter_id[]"];
-                IDlist = IDlist.Replace(",", "','");
-                IDlist = "'" + IDlist + "'";
-                DAL.z_parameter dal_z_parameter = new DAL.z_parameter();
-                dal_z_parameter.DeleteList(IDlist);
-                return RedirectToAction("Index", new { Name = HttpUtility.UrlEncode(Name), message = HttpUtility.UrlEncode("删除成功") });   
-            }
-            catch
-            {
-                return RedirectToAction("Index", new { Name = HttpUtility.UrlEncode(Name), message = HttpUtility.UrlEncode("删除失败") });   
-            }
-        }
-
-        public ActionResult Create(String Name)
-        {
-            Name = HttpUtility.UrlDecode(Name);
-            ViewBag.Name = Name;
-            return View();
-        }
-
-
-        [HttpPost]
-        public ActionResult Create(String Name, FormCollection collection)
-        {
-            Name = HttpUtility.UrlDecode(Name);
-            try
-            {
-                String VALUE = collection["VALUE"].Trim();
-                String DESCRIPTION = collection["DESCRIPTION"].Trim();
-                if (VALUE == null || VALUE == "")
-                {
-                    ViewBag.Name = Name;
-                    ViewBag.message = "新建失败，名称不能为空";
-                    return View();
-                }
-                // TODO: Add insert logic here
-                Models.z_parameter model_z_parameter = new Models.z_parameter();
-                model_z_parameter.ID = Guid.NewGuid();
-                model_z_parameter.TYPE = "";
-                model_z_parameter.NAME = Name;
-                model_z_parameter.VALUE = VALUE;
-                model_z_parameter.DESCRIPTION = DESCRIPTION;
-                model_z_parameter.CREATE_USER_ID = ViewBag.model_z_user.ID;
-                model_z_parameter.CREATE_DATETIME = DateTime.Now;
-                model_z_parameter.UPDATE_USER_ID = ViewBag.model_z_user.ID;
-                model_z_parameter.UPDATE_DATETIME = DateTime.Now;
-                model_z_parameter.DELETE_FLG = "0";
-                DAL.z_parameter dal_z_parameter = new DAL.z_parameter();
-                dal_z_parameter.Add(model_z_parameter);
-                return RedirectToAction("Index", new { Name = HttpUtility.UrlEncode(Name), message =  HttpUtility.UrlEncode("新建成功")});       
-            }
-            catch
-            {
-                ViewBag.Name = Name;
-                ViewBag.message = "新建失败";
-                return View();
-            }
-        }
-
-        public ActionResult Edit(String Name, String ID)
-        {
-            Name = HttpUtility.UrlDecode(Name);
-            ViewBag.Name = Name;
+            ViewBag.Type = Type;
             DAL.z_parameter dal_z_parameter = new DAL.z_parameter();
             Models.z_parameter model_z_parameter = dal_z_parameter.GetModel(new Guid(ID));
             return View(model_z_parameter);
         }
 
         [HttpPost]
-        public ActionResult Edit(String Name, String ID, FormCollection collection)
+        public ActionResult Edit(String Type, String ID, FormCollection collection)
         {
-            Name = HttpUtility.UrlDecode(Name);
             try
             {
                 DAL.z_parameter dal_z_parameter = new DAL.z_parameter();
@@ -119,8 +51,8 @@ namespace JSYCRM.Controllers
                 String DESCRIPTION = collection["DESCRIPTION"].Trim();
                 if (VALUE == null || VALUE == "")
                 {
-                    ViewBag.Name = Name;
-                    ViewBag.message = "编辑失败，名称不能为空";
+                    ViewBag.Type = Type;
+                    ViewBag.message = "Edit failed. Value can't be blank";
                     return View(model_z_parameter);
                 }
                 model_z_parameter.VALUE = VALUE;
@@ -128,12 +60,12 @@ namespace JSYCRM.Controllers
                 model_z_parameter.UPDATE_USER_ID = ViewBag.model_z_user.ID;
                 model_z_parameter.UPDATE_DATETIME = DateTime.Now;
                 dal_z_parameter.Update(model_z_parameter);
-                return RedirectToAction("Index", new { Name = HttpUtility.UrlEncode(Name), message = HttpUtility.UrlEncode("编辑成功") });
+                return RedirectToAction("Index", new { Type = HttpUtility.UrlEncode(Type), message = HttpUtility.UrlEncode("Edit Succeed.") });
             }
             catch
             {
-                ViewBag.Name = Name;
-                ViewBag.message = "编辑失败";
+                ViewBag.Type = Type;
+                ViewBag.message = "Edit Failed.";
                 return View();
             }
         }

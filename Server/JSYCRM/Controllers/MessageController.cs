@@ -14,9 +14,11 @@ namespace JSYCRM.Controllers
         public JsonResult Get(string user)
         {
             DAL.m_announcement_user dal_m_announcement_user = new DAL.m_announcement_user();
+            DAL.z_parameter dal_z_parameter = new DAL.z_parameter();
             DAL.m_announcement dal_m_announcement = new DAL.m_announcement();
             Models.m_announcement_user model_m_announcement_user = dal_m_announcement_user.GetModel(user);
             Models.m_announcement model_m_announcement = null;
+            Models.z_parameter model_z_parameter = dal_z_parameter.GetModel("Client", "Interval");
             if (model_m_announcement_user != null)
             {
                 model_m_announcement = dal_m_announcement.GetModel(model_m_announcement_user.ANNOUNCEMENT_ID);
@@ -27,13 +29,14 @@ namespace JSYCRM.Controllers
             }
             if (model_m_announcement == null)
             {
-                return Json(new { result = false}, JsonRequestBehavior.AllowGet);
+                return Json(new { result = false, interval = model_z_parameter.VALUE }, JsonRequestBehavior.AllowGet);
             }
             else
             {
                 Common.Encrypt encrypt = new Common.Encrypt();
                 return Json(new { 
                         result = true,
+                        interval = model_z_parameter.VALUE,
                         ID = encrypt.EncryptString(model_m_announcement.ID.ToString()),
                         TITLE = encrypt.EncryptString(model_m_announcement.TITLE),
                         CONTENT = encrypt.EncryptString(model_m_announcement.BODY),

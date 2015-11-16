@@ -34,7 +34,8 @@
                 <tr>
                     <td class="tdleft">To</td>
                     <td>
-                        @(Model.DEPARTMENT)
+                        <div id="btnAddUserList"><ul class='nav nav-list' style="cursor:default;"></ul></div>
+                        <input type="text" name="to" id="to" style="display:none;" value="@(Model.DEPARTMENT)" />
                     </td>
                 </tr>
                 <tr>
@@ -55,16 +56,7 @@
         </table>
     </div>
 </div>
+<script type="text/javascript" src="~/Scripts/userPicker.js"></script>
 <script type="text/javascript">
-    $(function () {
-        $('#delete').click(function () {
-            if(confirm("Confirm Delete?")) {
-                return ture;
-            }
-            else
-            {
-                return false;
-            }
-        });
-    });
+    refreshFrom($("#to").val(), false);
 </script>
