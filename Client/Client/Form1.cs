@@ -31,6 +31,7 @@ namespace Client
             iconNotificationBlank = Icon.FromHandle(((Bitmap)imageListMain.Images[1]).GetHicon());
             this.Icon = iconNotification;
             this.notifyIconMain.Icon = iconNotification;
+            this.notifyIconMain.Text = userName;
             timerMain.Start();
             getMessage();
         }
