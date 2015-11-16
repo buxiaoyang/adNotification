@@ -39,8 +39,8 @@
             this.webBrowserMain = new System.Windows.Forms.WebBrowser();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.panel3 = new System.Windows.Forms.Panel();
             this.buttonOK = new System.Windows.Forms.Button();
+            this.panel3 = new System.Windows.Forms.Panel();
             this.contextMenuStripMain.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -49,7 +49,7 @@
             // notifyIconMain
             // 
             this.notifyIconMain.ContextMenuStrip = this.contextMenuStripMain;
-            this.notifyIconMain.Text = "Notifications";
+            this.notifyIconMain.Text = "Message";
             this.notifyIconMain.Visible = true;
             this.notifyIconMain.DoubleClick += new System.EventHandler(this.notifyIconMain_DoubleClick);
             // 
@@ -59,13 +59,13 @@
             this.contextMenuStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItemNotifications});
             this.contextMenuStripMain.Name = "contextMenuStripMain";
-            this.contextMenuStripMain.Size = new System.Drawing.Size(172, 28);
+            this.contextMenuStripMain.Size = new System.Drawing.Size(176, 56);
             // 
             // toolStripMenuItemNotifications
             // 
             this.toolStripMenuItemNotifications.Name = "toolStripMenuItemNotifications";
-            this.toolStripMenuItemNotifications.Size = new System.Drawing.Size(171, 24);
-            this.toolStripMenuItemNotifications.Text = "Notifications";
+            this.toolStripMenuItemNotifications.Size = new System.Drawing.Size(175, 24);
+            this.toolStripMenuItemNotifications.Text = "Message";
             this.toolStripMenuItemNotifications.Click += new System.EventHandler(this.toolStripMenuItemNotifications_Click);
             // 
             // imageListMain
@@ -114,14 +114,6 @@
             this.panel2.Size = new System.Drawing.Size(649, 52);
             this.panel2.TabIndex = 0;
             // 
-            // panel3
-            // 
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(0, 0);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(649, 401);
-            this.panel3.TabIndex = 2;
-            // 
             // buttonOK
             // 
             this.buttonOK.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -133,16 +125,25 @@
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
             // 
+            // panel3
+            // 
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel3.Location = new System.Drawing.Point(0, 0);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(649, 401);
+            this.panel3.TabIndex = 2;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(649, 401);
             this.Controls.Add(this.panel1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormMain";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Notification";
+            this.Text = "Message";
             this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
             this.SizeChanged += new System.EventHandler(this.FormMain_SizeChanged);
