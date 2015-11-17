@@ -232,9 +232,11 @@
     <Content Include="Images\leads.jpg" />
     <Content Include="Images\left_arrow.png" />
     <Content Include="Images\load.gif" />
+    <Content Include="Images\logo-white.png" />
     <Content Include="Images\logo.png" />
     <Content Include="Images\logomini.png" />
     <Content Include="Images\logomini_36px.png" />
+    <Content Include="Images\logo_big.png" />
     <Content Include="Images\logo_img.png" />
     <Content Include="Images\l_l.jpg" />
     <Content Include="Images\mark_all.png" />
